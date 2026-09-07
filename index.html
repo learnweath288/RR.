@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Rimjhim ❤️</title>
+<style>
+  :root{
+    --bg1:#ffe3d6;
+    --bg2:#ffd0d8;
+    --heart:#ff4d6d;
+    --heart-dark:#c9184a;
+    --text:#4a2c2a;
+  }
+  *{box-sizing:border-box;}
+  html,body{
+    margin:0;
+    height:100%;
+    width:100%;
+    overflow:hidden;
+    font-family:'Georgia', 'Times New Roman', serif;
+    background:#111;
+  }
+  .card{
+    position:relative;
+    width:100%;
+    height:100%;
+    background:radial-gradient(circle at 50% 30%, var(--bg1), var(--bg2));
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow:hidden;
+    transition:background 1.2s ease;
+  }
+
+  /* ---------- SCENE 1 : pull & release ---------- */
+  .scene1{
+    position:absolute;
+    inset:0;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    transition:opacity 1s ease, transform 1s ease;
+  }
+  .hint-top{
+    position:absolute;
+    top:8%;
+    font-size:14px;
+    letter-spacing:2px;
+    color:var(--text);
+    opacity:.6;
+    font-style:italic;
+  }
+  .hint-bottom{
+    position:absolute;
+    bottom:8%;
+    font-size:12px;
+    letter-spacing:3px;
+    color:var(--text);
+    opacity:.45;
+    text-transform:uppercase;
+  }
+  .glow{
+    position:absolute;
+    width:340px;
+    height:340px;
+    border-radius:50%;
+    background:radial-gradient(circle, rgba(255,120,150,.55), rgba(255,120,150,0) 70%);
+    filter:blur(10px);
+    pointer-events:none;
+  }
+  .heart{
+    width:90px;
+    height:90px;
+    position:relative;
+    transform:rotate(45deg);
+    background:linear-gradient(135deg, #ff8fa3, var(--heart));
+    box-shadow: inset -6px -6px 12px rgba(0,0,0,.25), 0 0 30px rgba(255,77,109,.6);
+    animation:beat 1.6s ease-in-out infinite;
+    z-index:2;
+  }
+  .heart::before, .heart::after{
+    content:"";
+    position:absolute;
+    width:90px;
+    height:90px;
+    border-radius:50%;
+    background:inherit;
+    box-shadow: inherit;
+  }
+  .heart::before{ left:-45px; }
+  .heart::after{ top:-45px; }
+  @keyframes beat{
+    0%,100%{transform:rotate(45deg) scale(1);}
+    50%{transform:rotate(45deg) scale(1.08);}
+  }
+
+  svg.sling{
+    position:absolute;
+    top:0; left:0;
+    width:100%; height:100%;
+    pointer-events:none;
+  }
+  .sling-line{
+    stroke:rgba(74,44,42,.35);
+    stroke-width:4;
+    stroke-linecap:round;
+    fill:none;
+  }
+  .pull-dot{
+    position:absolute;
+    width:26px;
+    height:26px;
+    border-radius:50%;
+    background:radial-gradient(circle at 30% 30%, #fff, var(--heart));
+    box-shadow:0 0 12px rgba(255,77,109,.7);
+    cursor:grab;
+    z-index:3;
+    touch-action:none;
+  }
+  .pull-dot:active{ cursor:grabbing; }
+
+  .particle{
+    position:absolute;
+    border-radius:50%;
+    pointer-events:none;
+    opacity:0;
+  }
+
+  .reveal{
+    position:absolute;
+    inset:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:0 8%;
+    opacity:0;
+    pointer-events:none;
+    transition:opacity 1.4s ease;
+    background:radial-gradient(circle, #ffd9a0, #ff5c8a 70%);
+  }
+  .reveal.show{ opacity:1; pointer-events:auto; }
+  .reveal h1{
+    font-size:clamp(28px, 8vw, 56px);
+    color:#fff;
+    text-shadow:0 4px 18px rgba(0,0,0,.25);
+    margin:0;
+    letter-spacing:1px;
+  }
+
+  /* ---------- SCENE 2 : tree + falling hearts ---------- */
+  .scene2{
+    position:absolute;
+    inset:0;
+    display:flex;
+    align-items:flex-end;
+    justify-content:center;
+    opacity:0;
+    pointer-events:none;
+    transition:opacity 1.5s ease;
+    background:linear-gradient(to top, #ffd9a0, #ffb199 60%, #ffdde1);
+  }
+  .scene2.show{ opacity:1; pointer-events:auto; }
+  .tree-caption{
+    position:absolute;
+    top:12%;
+    left:10%;
+    font-style:italic;
+    color:var(--text);
+    opacity:.7;
+    font-size:14px;
+  }
+  .tree{
+    width:6px;
+    height:0;
+    background:#4a2c2a;
+    border-radius:4px;
+    position:relative;
+    margin-bottom:0;
+    transition:height 2s ease;
+  }
+  .branch{
+    position:absolute;
+    background:#4a2c2a;
+    border-radius:4px;
+    transform-origin:bottom center;
+    height:0;
+    transition:height 1.6s ease;
+  }
+  .falling-heart{
+    position:absolute;
+    top:-30px;
+    font-size:16px;
+    color:var(--heart);
+    animation:fall linear forwards;
+    opacity:.9;
+  }
+  @keyframes fall{
+    to{ transform:translateY(115vh) rotate(360deg); opacity:0; }
+  }
+  .final-line{
+    position:absolute;
+    bottom:6%;
+    font-size:15px;
+    color:var(--text);
+    opacity:.8;
+    letter-spacing:1px;
+  }
+</style>
+</head>
+<body>
+
+<div class="card">
+
+  <!-- SCENE 1 -->
+  <div class="scene1" id="scene1">
+    <div class="hint-top">a little something, for you</div>
+    <div class="glow"></div>
+    <div class="heart" id="heart"></div>
+    <svg class="sling" id="slingSvg">
+      <path class="sling-line" id="slingPath" d=""></path>
+    </svg>
+    <div class="pull-dot" id="pullDot"></div>
+    <div class="hint-bottom" id="hintBottom">pull &amp; release</div>
+  </div>
+
+  <!-- REVEAL -->
+  <div class="reveal" id="reveal">
+    <h1>I LOVE YOU RIMJHIM</h1>
+  </div>
+
+  <!-- SCENE 2 -->
+  <div class="scene2" id="scene2">
+    <div class="tree-caption">and... make it count</div>
+    <div class="tree" id="tree"></div>
+    <div class="final-line" id="finalLine"></div>
+  </div>
+
+</div>
+
+<script>
+(function(){
+  const scene1   = document.getElementById('scene1');
+  const heart    = document.getElementById('heart');
+  const pullDot  = document.getElementById('pullDot');
+  const slingPath= document.getElementById('slingPath');
+  const reveal   = document.getElementById('reveal');
+  const scene2   = document.getElementById('scene2');
+  const hintBottom = document.getElementById('hintBottom');
+  const card     = document.querySelector('.card');
+
+  let anchor = {x:0, y:0};
+  let dot    = {x:0, y:0};
+  let rest   = {x:0, y:0};
+  let dragging = false;
+  let released = false;
+
+  function layout(){
+    const r = heart.getBoundingClientRect();
+    anchor.x = r.left + r.width/2;
+    anchor.y = r.top  + r.height/2;
+    rest.x = anchor.x - 90;
+    rest.y = anchor.y + 110;
+    if(!dragging && !released){
+      dot.x = rest.x; dot.y = rest.y;
+      placeDot();
+    }
+  }
+
+  function placeDot(){
+    pullDot.style.left = (dot.x - 13) + 'px';
+    pullDot.style.top  = (dot.y - 13) + 'px';
+    slingPath.setAttribute('d', `M ${anchor.x} ${anchor.y} L ${dot.x} ${dot.y}`);
+  }
+
+  window.addEventListener('resize', layout);
+  layout();
+
+  function startDrag(e){
+    if(released) return;
+    dragging = true;
+    move(e);
+  }
+  function move(e){
+    if(!dragging) return;
+    const p = (e.touches ? e.touches[0] : e);
+    dot.x = p.clientX;
+    dot.y = p.clientY;
+    const dx = dot.x - anchor.x, dy = dot.y - anchor.y;
+    const dist = Math.hypot(dx,dy);
+    const max = 160;
+    if(dist > max){
+      dot.x = anchor.x + dx/dist*max;
+      dot.y = anchor.y + dy/dist*max;
+    }
+    placeDot();
+    e.preventDefault && e.preventDefault();
+  }
+  function endDrag(){
+    if(!dragging) return;
+    dragging = false;
+    const dx = dot.x - anchor.x, dy = dot.y - anchor.y;
+    const dist = Math.hypot(dx,dy);
+    if(dist > 60){
+      release();
+    } else {
+      dot.x = rest.x; dot.y = rest.y;
+      placeDot();
+    }
+  }
+
+  pullDot.addEventListener('mousedown', startDrag);
+  pullDot.addEventListener('touchstart', startDrag, {passive:false});
+  window.addEventListener('mousemove', move);
+  window.addEventListener('touchmove', move, {passive:false});
+  window.addEventListener('mouseup', endDrag);
+  window.addEventListener('touchend', endDrag);
+
+  function release(){
+    released = true;
+    hintBottom.style.opacity = 0;
+    slingPath.style.transition = 'opacity .3s ease';
+    slingPath.style.opacity = 0;
+    pullDot.style.transition = 'opacity .3s ease';
+    pullDot.style.opacity = 0;
+
+    heart.style.transition = 'transform .6s cubic-bezier(.2,.8,.3,1.4)';
+    heart.style.transform = 'rotate(45deg) scale(1.6)';
+
+    burst();
+
+    setTimeout(()=>{
+      scene1.style.opacity = 0;
+      scene1.style.transform = 'scale(1.1)';
+      reveal.classList.add('show');
+    }, 480);
+
+    setTimeout(()=>{
+      reveal.style.opacity = 0;
+      reveal.style.pointerEvents = 'none';
+      scene2.classList.add('show');
+      growTree();
+    }, 3200);
+  }
+
+  function burst(){
+    const colors = ['#ff4d6d','#ff8fa3','#ffd166','#ffffff','#ff6f91'];
+    for(let i=0;i<28;i++){
+      const p = document.createElement('div');
+      p.className = 'particle';
+      const size = 5 + Math.random()*7;
+      p.style.width = size+'px';
+      p.style.height = size+'px';
+      p.style.left = anchor.x + 'px';
+      p.style.top  = anchor.y + 'px';
+      p.style.background = colors[i % colors.length];
+      document.body.appendChild(p);
+
+      const angle = Math.random()*Math.PI*2;
+      const dist  = 80 + Math.random()*160;
+      const tx = Math.cos(angle)*dist;
+      const ty = Math.sin(angle)*dist;
+
+      p.animate([
+        { transform:'translate(0,0) scale(1)', opacity:1 },
+        { transform:`translate(${tx}px, ${ty}px) scale(0)`, opacity:0 }
+      ], { duration: 900 + Math.random()*500, easing:'cubic-bezier(.2,.7,.3,1)' });
+
+      setTimeout(()=>p.remove(), 1500);
+    }
+  }
+
+  function growTree(){
+    const tree = document.getElementById('tree');
+    const finalLine = document.getElementById('finalLine');
+    tree.style.height = '160px';
+
+    const branchDefs = [
+      {h:70, rot:-35, top:10, left:-2},
+      {h:60, rot:35,  top:35, left:2},
+      {h:55, rot:-55, top:0,  left:-2},
+      {h:55, rot:55,  top:0,  left:2},
+      {h:45, rot:-15, top:-15,left:-1},
+      {h:45, rot:15,  top:-15,left:1},
+    ];
+    branchDefs.forEach((b,i)=>{
+      const el = document.createElement('div');
+      el.className = 'branch';
+      el.style.width = '5px';
+      el.style.left = `calc(50% + ${b.left}px)`;
+      el.style.bottom = (100 - b.top) + 'px';
+      el.style.transform = `rotate(${b.rot}deg)`;
+      tree.appendChild(el);
+      setTimeout(()=>{ el.style.height = b.h + 'px'; }, 300 + i*150);
+    });
+
+    const heartsInterval = setInterval(()=>{
+      const fh = document.createElement('div');
+      fh.className = 'falling-heart';
+      fh.textContent = '❤';
+      fh.style.left = Math.random()*100 + 'vw';
+      fh.style.animationDuration = (4 + Math.random()*3) + 's';
+      fh.style.fontSize = (12 + Math.random()*10) + 'px';
+      document.body.appendChild(fh);
+      setTimeout(()=>fh.remove(), 8000);
+    }, 350);
+
+    setTimeout(()=>{
+      finalLine.textContent = 'happy birthday, my love — Rimjhim 🎂❤';
+    }, 1800);
+
+    setTimeout(()=>clearInterval(heartsInterval), 60000);
+  }
+})();
+</script>
+</body>
+</html>
